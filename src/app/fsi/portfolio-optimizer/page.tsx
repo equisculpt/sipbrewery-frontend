@@ -198,7 +198,7 @@ export default function PortfolioOptimizer() {
           ],
           estimatedCost: 0.35,
           expectedBenefit: 'Educational analysis - consult advisor for actual decisions'
-        }
+        },
       });
     } finally {
       setLoading(false);
