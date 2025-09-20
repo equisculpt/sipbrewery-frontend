@@ -1,0 +1,207 @@
+/* 🎯 INNOVATIVE BLOG CENTERING SOLUTION */
+/* Advanced CSS Grid & Flexbox Hybrid Centering System */
+
+/* Universal Text Centering Override for Blog Pages */
+.blog-page-container {
+  /* CSS Grid for perfect centering */
+  display: grid;
+  place-items: center;
+  text-align: center;
+}
+
+/* Hero Section Safe Centering */
+.blog-hero-section {
+  text-align: center;
+}
+
+/* Only center paragraphs, not headers */
+.blog-hero-section p {
+  text-align: center !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+.blog-hero-section h1 {
+  text-align: center;
+  /* Keep normal display properties */
+}
+
+/* Subtitle Text Safe Centering */
+.blog-subtitle {
+  text-align: center !important;
+  display: block !important;
+  margin: 0 auto !important;
+}
+
+/* Safe Paragraph Centering in Hero Sections */
+.blog-page .hero-section p {
+  text-align: center !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+/* Safe Container Centering */
+.center-content-safe {
+  text-align: center;
+}
+
+.center-content-safe > * {
+  text-align: center;
+}
+
+/* Responsive Text Centering */
+@media (max-width: 768px) {
+  .blog-responsive-center {
+    text-align: center !important;
+    display: block !important;
+    margin: 0 auto !important;
+  }
+}
+
+@media (min-width: 769px) {
+  .blog-responsive-center {
+    text-align: center !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+  }
+}
+
+/* Newsletter Section Perfect Centering */
+.newsletter-section {
+  display: grid !important;
+  place-items: center !important;
+  text-align: center !important;
+}
+
+.newsletter-section * {
+  text-align: center !important;
+  justify-self: center !important;
+  align-self: center !important;
+}
+
+/* Surgical Text Centering - Only for Paragraphs */
+.blog-subtitle-only {
+  text-align: center !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+/* Header Safe Centering - Preserve Normal Flow */
+.header-safe-center {
+  text-align: center !important;
+  /* No display changes that could affect layout */
+}
+
+/* Paragraph Only Centering */
+.paragraph-center {
+  text-align: center !important;
+  display: block !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+/* 🎯 SUBSCRIPTION SECTION PERFECT CENTERING */
+/* Force center alignment for all subscription sections */
+section[class*="border-t"] {
+  text-align: center !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+/* Target subscription motion divs specifically */
+section[class*="border-t"] > div[class*="motion"] {
+  text-align: center !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 100% !important;
+}
+
+/* Force center all subscription content */
+section[class*="border-t"] h3,
+section[class*="border-t"] p,
+section[class*="border-t"] div {
+  text-align: center !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+/* Subscription form centering */
+section[class*="border-t"] div[class*="flex"] {
+  justify-content: center !important;
+  align-items: center !important;
+  margin: 0 auto !important;
+}
+
+/* Input and button alignment */
+section[class*="border-t"] input,
+section[class*="border-t"] button {
+  text-align: center !important;
+}
+
+/* Mobile responsive centering for subscription */
+@media (max-width: 640px) {
+  section[class*="border-t"] input {
+    text-align: center !important;
+    width: 100% !important;
+  }
+}
+
+/* 🎯 DYNAMIC TEXT CENTERING FOR ALL PAGES */
+/* Advanced centering system using CSS Grid + Flexbox + Transform */
+.dynamic-center-text {
+  display: grid !important;
+  place-items: center !important;
+  text-align: center !important;
+  justify-content: center !important;
+  align-items: center !important;
+  margin: 0 auto !important;
+}
+
+/* Hero subtitle dynamic centering */
+.hero-subtitle-dynamic {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  text-align: center !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  width: 100% !important;
+}
+
+/* Universal paragraph centering for community pages */
+.community-page p {
+  text-align: center !important;
+  display: block !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  justify-self: center !important;
+  align-self: center !important;
+}
+
+/* Responsive text centering */
+@media (max-width: 768px) {
+  .dynamic-center-text,
+  .hero-subtitle-dynamic,
+  .community-page p {
+    text-align: center !important;
+    display: block !important;
+    margin: 0 auto !important;
+    width: 100% !important;
+  }
+}
+
+@media (min-width: 769px) {
+  .dynamic-center-text,
+  .hero-subtitle-dynamic {
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    text-align: center !important;
+  }
+}

@@ -1,0 +1,774 @@
+'use client';
+
+import React, { useState, useEffect } from 'react';
+import {
+  TrendingUp,
+  TrendingDown,
+  DollarSign,
+  Users,
+  PieChart,
+  BarChart3,
+  Globe,
+  Target,
+  Zap,
+  Shield,
+  Award,
+  Activity,
+  ArrowUpRight,
+  ArrowDownRight,
+  Eye,
+  Bell,
+  Settings,
+  LogOut,
+  Search,
+  Filter,
+  Calendar,
+  Download,
+  RefreshCw,
+  Star,
+  Building,
+  Briefcase,
+  CreditCard,
+  LineChart,
+  Database,
+  Layers,
+  MapPin,
+  Clock,
+  CheckCircle,
+  AlertTriangle,
+  Info
+} from 'lucide-react';
+
+interface SIPBreweryDashboardProps {
+  onLogout?: () => void;
+}
+
+const SIPBreweryDashboard: React.FC<SIPBreweryDashboardProps> = ({ 
+  onLogout 
+}) => {
+  const [activeSection, setActiveSection] = useState('overview');
+  const [isLoading, setIsLoading] = useState(false);
+  const [currentTime, setCurrentTime] = useState(new Date());
+  const [smartSipTimeframe, setSmartSipTimeframe] = useState<'all' | '1y' | '30d'>('all');
+  const [animatedAUM, setAnimatedAUM] = useState(0);
+  const [showTooltip, setShowTooltip] = useState(false);
+  const [showAIBot, setShowAIBot] = useState(false);
+  const [isRefreshing, setIsRefreshing] = useState(false);
+  const [hoveredMonth, setHoveredMonth] = useState<string | null>(null);
+
+  // Update time every second
+  useEffect(() => {
+    const timer = setInterval(() => setCurrentTime(new Date()), 1000);
+    return () => clearInterval(timer);
+  }, []);
+
+  // Progressive milestone system
+  const getCurrentMilestone = (currentAUM: number) => {
+    if (currentAUM < 100) return { target: 100, level: 1, name: 'Launch Milestone' };
+    if (currentAUM < 1000) return { target: 1000, level: 2, name: 'Growth Milestone' };
+    if (currentAUM < 10000) return { target: 10000, level: 3, name: 'Scale Milestone' };
+    return { target: 100000, level: 4, name: 'Trillion Milestone' };
+  };
+
+  // Mock data for demonstration
+  const dashboardData = {
+    totalAUM: 75.5, // Current AUM in crores (₹75.5 Cr)
+    monthlyGrowth: 12.4,
+    totalInvestors: 2847392,
+    activeFunds: 1247,
+    performanceScore: 87.5,
+    topPerformers: [
+      { name: 'SIP Growth Fund', return: '+24.8%', aum: '₹12.4B', risk: 'Moderate' },
+      { name: 'Equity Momentum', return: '+19.2%', aum: '₹8.7B', risk: 'High' },
+      { name: 'Balanced Advantage', return: '+16.5%', aum: '₹15.2B', risk: 'Low' },
+    ],
+    recentActivity: [
+      { type: 'investment', amount: '₹2.4Cr', fund: 'Large Cap Fund', time: '2 min ago' },
+      { type: 'redemption', amount: '₹1.8Cr', fund: 'Debt Fund', time: '5 min ago' },
+      { type: 'new_investor', amount: '₹5.2Cr', fund: 'Hybrid Fund', time: '8 min ago' },
+      { type: 'investment', amount: '₹3.1Cr', fund: 'ELSS Fund', time: '12 min ago' },
+    ]
+  };
+
+  // Animate AUM counter on load
+  useEffect(() => {
+    const targetAUM = dashboardData.totalAUM;
+    const duration = 2000; // 2 seconds
+    const steps = 60;
+    const increment = targetAUM / steps;
+    let current = 0;
+    
+    const timer = setInterval(() => {
+      current += increment;
+      if (current >= targetAUM) {
+        setAnimatedAUM(targetAUM);
+        clearInterval(timer);
+      } else {
+        setAnimatedAUM(current);
+      }
+    }, duration / steps);
+    
+    return () => clearInterval(timer);
+  }, []);
+
+  // Handle refresh animation
+  const handleRefresh = () => {
+    setIsRefreshing(true);
+    setTimeout(() => setIsRefreshing(false), 1000);
+  };
+
+  // Chart data for 12 months (realistic growth from launch)
+  const chartData = [
+    { month: 'Jan \'24', value: 8.5, amount: '₹8.5 Cr' },
+    { month: 'Feb \'24', value: 15.2, amount: '₹15.2 Cr' },
+    { month: 'Mar \'24', value: 23.8, amount: '₹23.8 Cr' },
+    { month: 'Apr \'24', value: 32.4, amount: '₹32.4 Cr' },
+    { month: 'May \'24', value: 41.7, amount: '₹41.7 Cr' },
+    { month: 'Jun \'24', value: 48.9, amount: '₹48.9 Cr' },
+    { month: 'Jul \'24', value: 56.3, amount: '₹56.3 Cr' },
+    { month: 'Aug \'24', value: 62.8, amount: '₹62.8 Cr' },
+    { month: 'Sep \'24', value: 68.1, amount: '₹68.1 Cr' },
+    { month: 'Oct \'24', value: 71.9, amount: '₹71.9 Cr' },
+    { month: 'Nov \'24', value: 74.2, amount: '₹74.2 Cr' },
+    { month: 'Dec \'24', value: 75.5, amount: '₹75.5 Cr' }
+  ];
+    topPerformers: [
+      { name: 'SIP Growth Fund', return: '+24.8%', aum: '₹12.4B', risk: 'Moderate' },
+      { name: 'Equity Momentum', return: '+19.2%', aum: '₹8.7B', risk: 'High' },
+      { name: 'Balanced Advantage', return: '+16.5%', aum: '₹15.2B', risk: 'Low' },
+    ],
+    recentActivity: [
+      { type: 'investment', amount: '₹2.4Cr', fund: 'Large Cap Fund', time: '2 min ago' },
+      { type: 'redemption', amount: '₹1.8Cr', fund: 'Debt Fund', time: '5 min ago' },
+      { type: 'new_investor', amount: '₹50L', fund: 'ELSS Fund', time: '8 min ago' },
+    ],
+    smartSipData: {
+      all: {
+        dynamicSipsActive: 53210,
+        sipsOptimized: 24.8,
+        aiAlphaBoost: 18.5
+      },
+      '1y': {
+        dynamicSipsActive: 48750,
+        sipsOptimized: 22.3,
+        aiAlphaBoost: 16.2
+      },
+      '30d': {
+        dynamicSipsActive: 12840,
+        sipsOptimized: 31.7,
+        aiAlphaBoost: 21.8
+      }
+    }
+  };
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-900 text-white">
+      {/* Header Section */}
+      <header className="bg-slate-900/80 backdrop-blur-xl border-b border-slate-700/50 sticky top-0 z-50">
+        <div className="max-w-7xl mx-auto px-6 py-4">
+          <div className="flex items-center justify-between">
+            {/* Logo & Brand */}
+            <div className="flex items-center space-x-4">
+              <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl flex items-center justify-center shadow-lg">
+                <DollarSign className="w-6 h-6 text-white" />
+              </div>
+              <div>
+                <h1 className="text-2xl font-black tracking-tight">
+                  SIP<span className="text-blue-400">Brewery</span>
+                </h1>
+                <p className="text-sm text-slate-400">$1 Trillion AUM Mission</p>
+              </div>
+            </div>
+
+            {/* Real-time Stats */}
+            <div className="hidden lg:flex items-center space-x-8">
+              <div className="text-center">
+                <div className="text-2xl font-bold text-green-400">₹{dashboardData.totalAUM}B</div>
+                <div className="text-xs text-slate-400">Current AUM</div>
+              </div>
+              <div className="text-center">
+                <div className="text-lg font-bold text-blue-400">{dashboardData.monthlyGrowth}%</div>
+                <div className="text-xs text-slate-400">Monthly Growth</div>
+              </div>
+              <div className="text-center">
+                <div className="text-lg font-bold text-purple-400">{(dashboardData.totalInvestors / 1000000).toFixed(1)}M</div>
+                <div className="text-xs text-slate-400">Investors</div>
+              </div>
+            </div>
+
+            {/* User Actions */}
+            <div className="flex items-center space-x-4">
+              <div className="text-right">
+                <div className="text-sm font-medium">{currentTime.toLocaleTimeString()}</div>
+                <div className="text-xs text-slate-400">IST • Live</div>
+              </div>
+              <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+              <button className="p-2 hover:bg-slate-700/50 rounded-lg transition-colors">
+                <Bell className="w-5 h-5" />
+              </button>
+              <button className="p-2 hover:bg-slate-700/50 rounded-lg transition-colors">
+                <Settings className="w-5 h-5" />
+              </button>
+              <button 
+                onClick={onLogout}
+                className="p-2 hover:bg-red-500/20 text-red-400 rounded-lg transition-colors"
+              >
+                <LogOut className="w-5 h-5" />
+              </button>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      {/* Main Content */}
+      <main className="max-w-7xl mx-auto px-6 py-8">
+        {/* 🏆 PRO-LEVEL HERO SECTION: The ₹1 Trillion Tracker */}
+        <section className="mb-12">
+          <div className="relative bg-gradient-to-br from-slate-950 via-blue-950 to-indigo-950 backdrop-blur-2xl rounded-3xl p-8 lg:p-12 border border-slate-700/50 shadow-2xl overflow-hidden">
+            {/* Premium Animated Background */}
+            <div className="absolute inset-0">
+              <div className="absolute top-10 right-10 w-32 h-32 bg-cyan-500/10 rounded-full blur-3xl animate-pulse"></div>
+              <div className="absolute bottom-10 left-10 w-40 h-40 bg-green-500/10 rounded-full blur-3xl animate-pulse delay-1000"></div>
+              <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-gradient-conic from-green-500/5 via-cyan-500/5 to-purple-500/5 rounded-full blur-3xl animate-spin" style={{animationDuration: '60s'}}></div>
+              {/* Glassmorphism grid */}
+              <div className="absolute inset-0 bg-[linear-gradient(rgba(6,182,212,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(6,182,212,0.03)_1px,transparent_1px)] bg-[size:50px_50px]"></div>
+            </div>
+            
+            <div className="relative z-10">
+              {(() => {
+                const currentMilestone = getCurrentMilestone(dashboardData.totalAUM);
+                const progressPercentage = (dashboardData.totalAUM / currentMilestone.target) * 100;
+                const remainingAmount = currentMilestone.target - dashboardData.totalAUM;
+                
+                return (
+                  <>
+                    {/* Header with Progressive Milestone */}
+                    <div className="flex items-center justify-between mb-8">
+                      <div className="inline-flex items-center space-x-3 bg-gradient-to-r from-cyan-500/20 to-green-500/20 backdrop-blur-sm rounded-2xl px-6 py-3 border border-cyan-500/30">
+                        <Target className="w-6 h-6 text-cyan-400" />
+                        <span className="text-cyan-300 font-bold text-lg tracking-wide">
+                          @ {currentMilestone.name.toUpperCase()} - ₹{currentMilestone.target} CR TARGET
+                        </span>
+                        <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+                      </div>
+                      
+                      <div className="flex items-center space-x-4">
+                        <div className="text-right">
+                          <div className="text-sm text-slate-400">Last updated: 3 minutes ago</div>
+                        </div>
+                        <button 
+                          onClick={handleRefresh}
+                          className="p-2 bg-slate-800/50 hover:bg-slate-700/50 rounded-lg border border-slate-600/50 transition-all"
+                        >
+                          <RefreshCw className={`w-4 h-4 text-cyan-400 ${isRefreshing ? 'animate-spin' : ''}`} />
+                        </button>
+                      </div>
+                    </div>
+
+              {/* Big AUM Display with Tooltip */}
+              <div className="text-center mb-8">
+                <div className="relative inline-block">
+                  <h1 
+                    className="text-5xl lg:text-7xl xl:text-8xl font-black text-transparent bg-gradient-to-r from-green-400 via-cyan-400 to-green-400 bg-clip-text mb-4 tracking-tight cursor-pointer filter drop-shadow-2xl"
+                    onMouseEnter={() => setShowTooltip(true)}
+                    onMouseLeave={() => setShowTooltip(false)}
+                    style={{
+                      fontFamily: 'Poppins, sans-serif',
+                      textShadow: '0 0 40px rgba(6, 182, 212, 0.3)'
+                    }}
+                  >
+                    ₹{animatedAUM.toFixed(2)}L Cr
+                  </h1>
+                  
+                  {/* Tooltip */}
+                  {showTooltip && (
+                    <div className="absolute top-full left-1/2 transform -translate-x-1/2 mt-4 bg-slate-900/95 backdrop-blur-xl border border-cyan-500/30 rounded-xl p-4 shadow-2xl z-50">
+                      <div className="text-cyan-400 font-mono text-lg">₹{(dashboardData.totalAUM * 10000000).toLocaleString('en-IN')}</div>
+                      <div className="text-slate-400 text-sm mt-1">Exact AUM Amount</div>
+                      {/* Tooltip arrow */}
+                      <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-8 border-r-8 border-b-8 border-l-transparent border-r-transparent border-b-slate-900/95"></div>
+                    </div>
+                  )}
+                </div>
+                
+                <p className="text-xl text-slate-300 font-medium mb-4" style={{fontFamily: 'Inter, sans-serif'}}>Current Assets Under Management</p>
+                
+                {/* Gamification Badge */}
+                <div className="inline-flex items-center space-x-2 bg-gradient-to-r from-yellow-500/20 to-orange-500/20 backdrop-blur-sm rounded-2xl px-6 py-3 border border-yellow-500/30 mb-6">
+                  <Award className="w-5 h-5 text-yellow-400" />
+                  <span className="text-yellow-300 font-semibold">
+                    You're powering our {currentMilestone.name} - Level {currentMilestone.level}!
+                  </span>
+                </div>
+                
+                <div className="flex items-center justify-center space-x-4 text-lg">
+                  <span className="text-green-400 font-bold">{progressPercentage.toFixed(1)}% Complete</span>
+                  <span className="text-slate-400">•</span>
+                  <span className="text-cyan-400 font-bold">₹{remainingAmount.toFixed(1)} Cr to go!</span>
+                </div>
+              </div>
+
+              {/* Premium Progress Bar */}
+              <div className="mb-8">
+                <div className="relative">
+                  <div className="w-full bg-slate-800/50 rounded-full h-6 border border-slate-700/50 shadow-inner backdrop-blur-sm">
+                    <div 
+                      className="relative h-6 bg-gradient-to-r from-green-400 via-cyan-400 to-green-500 rounded-full transition-all duration-3000 ease-out shadow-lg"
+                      style={{ width: `${progressPercentage}%` }}
+                    >
+                      {/* Animated shine effect */}
+                      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent rounded-full animate-pulse"></div>
+                      {/* Draggable-style progress indicator */}
+                      <div className="absolute right-1 top-1/2 transform -translate-y-1/2">
+                        <div className="w-4 h-4 bg-white rounded-full shadow-xl border-2 border-green-400 animate-pulse cursor-pointer hover:scale-110 transition-transform"></div>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  {/* Progress Labels */}
+                  <div className="flex justify-between mt-4 text-sm">
+                    <span className="text-slate-400 font-medium">₹0</span>
+                    <div className="text-center">
+                      <div className="text-white font-bold bg-slate-800/70 backdrop-blur-sm px-4 py-2 rounded-full border border-slate-600/50">
+                        {progressPercentage.toFixed(1)}% Complete • ₹{remainingAmount.toFixed(1)} Cr to go!
+                      </div>
+                    </div>
+                    <span className="text-green-400 font-bold">₹{currentMilestone.target.toLocaleString('en-IN')} Cr TARGET</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Interactive 12-Month AUM Growth Chart */}
+              <div className="mb-8">
+                <div className="bg-slate-800/30 backdrop-blur-xl rounded-2xl p-6 border border-slate-700/50">
+                  <div className="flex items-center justify-between mb-6">
+                    <h3 className="text-xl font-bold text-white" style={{fontFamily: 'Poppins, sans-serif'}}>12-Month AUM Growth Trajectory</h3>
+                    <div className="flex items-center space-x-2">
+                      <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+                      <span className="text-green-400 text-sm font-medium">+24.8% YoY</span>
+                    </div>
+                  </div>
+                  
+                  {/* Enhanced Interactive Chart */}
+                  <div className="relative h-32">
+                    <svg className="w-full h-full" viewBox="0 0 400 120">
+                      <defs>
+                        <linearGradient id="chartGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                          <stop offset="0%" stopColor="#06B6D4" stopOpacity="0.4"/>
+                          <stop offset="100%" stopColor="#10B981" stopOpacity="0.1"/>
+                        </linearGradient>
+                        <filter id="glow">
+                          <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+                          <feMerge> 
+                            <feMergeNode in="coloredBlur"/>
+                            <feMergeNode in="SourceGraphic"/> 
+                          </feMerge>
+                        </filter>
+                      </defs>
+                      
+                      {/* Area under curve */}
+                      <path d="M 0 90 L 33 85 L 66 80 L 100 82 L 133 78 L 166 75 L 200 70 L 233 65 L 266 60 L 300 55 L 333 45 L 366 35 L 400 30 L 400 120 L 0 120 Z" fill="url(#chartGradient)" />
+                      
+                      {/* Main line with glow */}
+                      <path d="M 0 90 L 33 85 L 66 80 L 100 82 L 133 78 L 166 75 L 200 70 L 233 65 L 266 60 L 300 55 L 333 45 L 366 35 L 400 30" stroke="#06B6D4" strokeWidth="3" fill="none" filter="url(#glow)" />
+                      
+                      {/* Interactive data points */}
+                      {chartData.map((point, index) => {
+                        const x = (index * 400) / (chartData.length - 1);
+                        const y = 120 - (point.value * 0.8); // Scale to fit
+                        return (
+                          <circle 
+                            key={index}
+                            cx={x} 
+                            cy={y} 
+                            r={index === chartData.length - 1 ? "6" : "4"} 
+                            fill={index === chartData.length - 1 ? "#10B981" : "#06B6D4"} 
+                            className="cursor-pointer hover:scale-125 transition-transform"
+                            onMouseEnter={() => setHoveredMonth(point.month)}
+                            onMouseLeave={() => setHoveredMonth(null)}
+                          />
+                        );
+                      })}
+                    </svg>
+                    
+                    {/* Month labels */}
+                    <div className="flex justify-between mt-3 text-xs text-slate-400">
+                      <span>Jan '24</span>
+                      <span>Mar '24</span>
+                      <span>Jun '24</span>
+                      <span>Aug '24</span>
+                      <span className="text-green-400 font-bold">Dec '24</span>
+                    </div>
+                    
+                    {/* Hover tooltip for chart */}
+                    {hoveredMonth && (
+                      <div className="absolute top-0 left-1/2 transform -translate-x-1/2 bg-slate-900/95 backdrop-blur-xl border border-cyan-500/30 rounded-lg p-3 shadow-xl z-50">
+                        <div className="text-cyan-400 font-semibold">{hoveredMonth}</div>
+                        <div className="text-slate-300 text-sm">{chartData.find(d => d.month === hoveredMonth)?.amount}</div>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </div>
+
+              {/* Motivational Quote with Neon Effect */}
+              <div className="text-center mb-8">
+                <div className="bg-gradient-to-r from-slate-800/50 to-slate-900/50 backdrop-blur-xl rounded-2xl p-6 border border-slate-700/50">
+                  <blockquote 
+                    className="text-2xl lg:text-3xl font-bold text-transparent bg-gradient-to-r from-green-400 via-cyan-400 to-green-400 bg-clip-text mb-3"
+                    style={{
+                      fontFamily: 'Poppins, sans-serif',
+                      filter: 'drop-shadow(0 0 20px rgba(6, 182, 212, 0.3))'
+                    }}
+                  >
+                    "Let's brew the world's smartest ₹ to ₹1 trillion."
+                  </blockquote>
+                  <p className="text-slate-400 text-lg font-medium" style={{fontFamily: 'Inter, sans-serif'}}>— SIPBrewery Mission Statement</p>
+                </div>
+              </div>
+
+              {/* Action Buttons */}
+              <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                <button className="group relative overflow-hidden bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white font-bold py-4 px-8 rounded-2xl transition-all duration-300 transform hover:scale-105 shadow-xl hover:shadow-green-500/25">
+                  <div className="absolute inset-0 bg-gradient-to-r from-emerald-400 to-green-400 opacity-0 group-hover:opacity-20 transition-opacity duration-300"></div>
+                  <div className="relative flex items-center space-x-3">
+                    <TrendingUp className="w-6 h-6" />
+                    <span className="text-xl">Invest Now</span>
+                    <ArrowUpRight className="w-5 h-5" />
+                  </div>
+                </button>
+                
+                <button className="group relative overflow-hidden bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-700 hover:to-blue-700 text-white font-bold py-4 px-8 rounded-2xl transition-all duration-300 transform hover:scale-105 shadow-xl hover:shadow-cyan-500/25">
+                  <div className="absolute inset-0 bg-gradient-to-r from-blue-400 to-cyan-400 opacity-0 group-hover:opacity-20 transition-opacity duration-300"></div>
+                  <div className="relative flex items-center space-x-3">
+                    <BarChart3 className="w-6 h-6" />
+                    <span className="text-xl">Track SIP Performance</span>
+                    <Eye className="w-5 h-5" />
+                  </div>
+                </button>
+              </div>
+            </div>
+            
+            {/* AI Brain Bot - Bottom Right */}
+            <div className="absolute bottom-6 right-6">
+              <div className="relative">
+                <button 
+                  className="w-14 h-14 bg-gradient-to-r from-purple-600 to-pink-600 rounded-full flex items-center justify-center shadow-xl hover:scale-110 transition-all duration-300 animate-pulse"
+                  onMouseEnter={() => setShowAIBot(true)}
+                  onMouseLeave={() => setShowAIBot(false)}
+                >
+                  <span className="text-2xl">🧠</span>
+                </button>
+                
+                {/* AI Bot Tooltip */}
+                {showAIBot && (
+                  <div className="absolute bottom-full right-0 mb-4 bg-slate-900/95 backdrop-blur-xl border border-purple-500/30 rounded-xl p-4 shadow-2xl z-50 w-64">
+                    <div className="text-purple-400 font-semibold mb-2">Ask SIPBot AI</div>
+                    <div className="text-slate-300 text-sm">"What's driving AUM this month?"</div>
+                    {/* Tooltip arrow */}
+                    <div className="absolute top-full right-6 w-0 h-0 border-l-8 border-r-8 border-t-8 border-l-transparent border-r-transparent border-t-slate-900/95"></div>
+                  </div>
+                )}
+              </div>
+            </div>
+                  </>
+                );
+              })()}
+            </div>
+          </div>
+        </section>
+
+        {/* 🤖 SMART SIP ENGINE SECTION */}
+        <section className="mb-12">
+          <div className="bg-gradient-to-br from-slate-800/40 via-blue-900/30 to-purple-900/40 backdrop-blur-xl rounded-3xl p-8 border border-slate-700/50 shadow-2xl">
+            {/* Section Header */}
+            <div className="text-center mb-8">
+              <div className="inline-flex items-center space-x-3 bg-gradient-to-r from-purple-500/20 to-blue-500/20 backdrop-blur-sm rounded-2xl px-6 py-3 border border-purple-500/30 mb-4">
+                <Zap className="w-6 h-6 text-purple-400" />
+                <span className="text-purple-300 font-bold text-lg tracking-wide">SMART SIP ENGINE</span>
+                <div className="w-2 h-2 bg-purple-400 rounded-full animate-pulse"></div>
+              </div>
+              
+              <h2 className="text-3xl lg:text-4xl font-black text-white mb-3">
+                AI-Powered SIP Intelligence
+              </h2>
+              <p className="text-slate-300 text-lg max-w-2xl mx-auto">
+                Advanced algorithms optimize your SIP investments in real-time for maximum returns
+              </p>
+            </div>
+
+            {/* Time Period Toggle */}
+            <div className="flex justify-center mb-8">
+              <div className="bg-slate-800/50 backdrop-blur-sm rounded-2xl p-2 border border-slate-700/50">
+                <div className="flex space-x-2">
+                  {[
+                    { id: 'all', label: 'All Time' },
+                    { id: '1y', label: 'Last 1Y' },
+                    { id: '30d', label: 'Last 30 Days' }
+                  ].map((period) => (
+                    <button
+                      key={period.id}
+                      onClick={() => setSmartSipTimeframe(period.id as 'all' | '1y' | '30d')}
+                      className={`px-6 py-3 rounded-xl font-semibold transition-all duration-300 ${
+                        smartSipTimeframe === period.id
+                          ? 'bg-purple-600 text-white shadow-lg transform scale-105'
+                          : 'text-slate-400 hover:text-white hover:bg-slate-700/50'
+                      }`}
+                    >
+                      {period.label}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* Smart SIP Cards */}
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+              {/* Dynamic SIPs Active */}
+              <div className="bg-gradient-to-br from-green-900/30 to-emerald-900/30 backdrop-blur-sm rounded-2xl p-8 border border-green-500/30 hover:border-green-400/50 transition-all duration-300 group">
+                <div className="text-center">
+                  <div className="w-16 h-16 bg-green-500/20 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300">
+                    <TrendingUp className="w-8 h-8 text-green-400" />
+                  </div>
+                  
+                  <div className="mb-4">
+                    <div className="text-4xl lg:text-5xl font-black text-green-400 mb-2">
+                      {dashboardData.smartSipData[smartSipTimeframe].dynamicSipsActive.toLocaleString()}
+                    </div>
+                    <div className="text-green-300 font-semibold text-lg">Dynamic SIPs Active</div>
+                  </div>
+                  
+                  <div className="bg-green-500/10 rounded-xl p-4 border border-green-500/20">
+                    <div className="flex items-center justify-center space-x-2 mb-2">
+                      <Activity className="w-4 h-4 text-green-400" />
+                      <span className="text-green-400 text-sm font-medium">Real-time Optimization</span>
+                    </div>
+                    <p className="text-green-200 text-sm">
+                      AI adjusts investment amounts based on market conditions
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              {/* SIPs Optimized This Month */}
+              <div className="bg-gradient-to-br from-blue-900/30 to-indigo-900/30 backdrop-blur-sm rounded-2xl p-8 border border-blue-500/30 hover:border-blue-400/50 transition-all duration-300 group">
+                <div className="text-center">
+                  <div className="w-16 h-16 bg-blue-500/20 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300">
+                    <Settings className="w-8 h-8 text-blue-400" />
+                  </div>
+                  
+                  <div className="mb-4">
+                    <div className="text-4xl lg:text-5xl font-black text-blue-400 mb-2">
+                      +{dashboardData.smartSipData[smartSipTimeframe].sipsOptimized}%
+                    </div>
+                    <div className="text-blue-300 font-semibold text-lg">SIPs Optimized</div>
+                  </div>
+                  
+                  <div className="bg-blue-500/10 rounded-xl p-4 border border-blue-500/20">
+                    <div className="flex items-center justify-center space-x-2 mb-2">
+                      <RefreshCw className="w-4 h-4 text-blue-400" />
+                      <span className="text-blue-400 text-sm font-medium">Performance Improvement</span>
+                    </div>
+                    <p className="text-blue-200 text-sm">
+                      Average improvement over traditional SIP strategies
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              {/* AI Alpha Boost */}
+              <div className="bg-gradient-to-br from-purple-900/30 to-pink-900/30 backdrop-blur-sm rounded-2xl p-8 border border-purple-500/30 hover:border-purple-400/50 transition-all duration-300 group">
+                <div className="text-center">
+                  <div className="w-16 h-16 bg-purple-500/20 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300">
+                    <Zap className="w-8 h-8 text-purple-400" />
+                  </div>
+                  
+                  <div className="mb-4">
+                    <div className="text-4xl lg:text-5xl font-black text-purple-400 mb-2">
+                      +{dashboardData.smartSipData[smartSipTimeframe].aiAlphaBoost}%
+                    </div>
+                    <div className="text-purple-300 font-semibold text-lg">AI Alpha Boost</div>
+                  </div>
+                  
+                  <div className="bg-purple-500/10 rounded-xl p-4 border border-purple-500/20">
+                    <div className="flex items-center justify-center space-x-2 mb-2">
+                      <Star className="w-4 h-4 text-purple-400" />
+                      <span className="text-purple-400 text-sm font-medium">Outperformance vs Regular SIP</span>
+                    </div>
+                    <p className="text-purple-200 text-sm">
+                      Extra returns generated by AI-driven timing and allocation
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Bottom Stats */}
+            <div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-6">
+              <div className="text-center">
+                <div className="text-2xl font-bold text-white mb-1">1000+</div>
+                <div className="text-slate-400 text-sm">AI Models Running</div>
+              </div>
+              <div className="text-center">
+                <div className="text-2xl font-bold text-white mb-1">24/7</div>
+                <div className="text-slate-400 text-sm">Market Monitoring</div>
+              </div>
+              <div className="text-center">
+                <div className="text-2xl font-bold text-white mb-1">&lt; 1ms</div>
+                <div className="text-slate-400 text-sm">Decision Latency</div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Navigation Tabs */}
+        <nav className="mb-8">
+          <div className="bg-slate-800/30 backdrop-blur-xl rounded-2xl p-2 border border-slate-700/50">
+            <div className="flex space-x-2">
+              {[
+                { id: 'overview', label: 'Portfolio Overview', icon: BarChart3 },
+                { id: 'funds', label: 'Fund Performance', icon: TrendingUp },
+                { id: 'investors', label: 'Investor Analytics', icon: Users },
+                { id: 'market', label: 'Market Intelligence', icon: Globe },
+                { id: 'risk', label: 'Risk Management', icon: Shield },
+              ].map((tab) => (
+                <button
+                  key={tab.id}
+                  onClick={() => setActiveSection(tab.id)}
+                  className={`flex items-center space-x-2 px-6 py-3 rounded-xl font-medium transition-all ${
+                    activeSection === tab.id
+                      ? 'bg-blue-600 text-white shadow-lg'
+                      : 'text-slate-400 hover:text-white hover:bg-slate-700/50'
+                  }`}
+                >
+                  <tab.icon className="w-4 h-4" />
+                  <span>{tab.label}</span>
+                </button>
+              ))}
+            </div>
+          </div>
+        </nav>
+
+        {/* Dynamic Content Based on Active Section */}
+        {activeSection === 'overview' && (
+          <div className="space-y-8">
+            {/* Top Performing Funds */}
+            <section>
+              <div className="flex items-center justify-between mb-6">
+                <div>
+                  <h3 className="text-2xl font-bold text-white">Top Performing Funds</h3>
+                  <p className="text-slate-400">Best performers this quarter</p>
+                </div>
+                <button className="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg font-medium transition-colors flex items-center space-x-2">
+                  <Eye className="w-4 h-4" />
+                  <span>View All</span>
+                </button>
+              </div>
+
+              <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                {dashboardData.topPerformers.map((fund, index) => (
+                  <div key={index} className="bg-slate-800/50 backdrop-blur-xl rounded-2xl p-6 border border-slate-700/50 hover:border-blue-500/50 transition-all">
+                    <div className="flex items-center justify-between mb-4">
+                      <div className="flex items-center space-x-3">
+                        <div className={`w-3 h-3 rounded-full ${index === 0 ? 'bg-yellow-400' : index === 1 ? 'bg-gray-400' : 'bg-orange-400'}`}></div>
+                        <span className="text-sm text-slate-400">#{index + 1} Performer</span>
+                      </div>
+                      <span className={`px-3 py-1 rounded-full text-xs font-medium ${
+                        fund.risk === 'Low' ? 'bg-green-900/30 text-green-400' :
+                        fund.risk === 'Moderate' ? 'bg-yellow-900/30 text-yellow-400' :
+                        'bg-red-900/30 text-red-400'
+                      }`}>
+                        {fund.risk} Risk
+                      </span>
+                    </div>
+                    
+                    <h4 className="text-xl font-bold text-white mb-2">{fund.name}</h4>
+                    
+                    <div className="flex items-center justify-between mb-4">
+                      <div>
+                        <div className="text-2xl font-bold text-green-400">{fund.return}</div>
+                        <div className="text-sm text-slate-400">3M Return</div>
+                      </div>
+                      <div className="text-right">
+                        <div className="text-lg font-bold text-white">{fund.aum}</div>
+                        <div className="text-sm text-slate-400">AUM</div>
+                      </div>
+                    </div>
+                    
+                    <button className="w-full bg-slate-700/50 hover:bg-blue-600/20 border border-slate-600/50 hover:border-blue-500/50 py-3 rounded-xl font-medium transition-all">
+                      View Details
+                    </button>
+                  </div>
+                ))}
+              </div>
+            </section>
+
+            {/* Recent Activity Feed */}
+            <section>
+              <div className="flex items-center justify-between mb-6">
+                <div>
+                  <h3 className="text-2xl font-bold text-white">Live Activity Feed</h3>
+                  <p className="text-slate-400">Real-time transactions and updates</p>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+                  <span className="text-green-400 text-sm font-medium">Live</span>
+                </div>
+              </div>
+
+              <div className="bg-slate-800/30 backdrop-blur-xl rounded-2xl border border-slate-700/50 overflow-hidden">
+                {dashboardData.recentActivity.map((activity, index) => (
+                  <div key={index} className="flex items-center justify-between p-6 border-b border-slate-700/30 last:border-b-0 hover:bg-slate-700/20 transition-colors">
+                    <div className="flex items-center space-x-4">
+                      <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${
+                        activity.type === 'investment' ? 'bg-green-500/20 text-green-400' :
+                        activity.type === 'redemption' ? 'bg-red-500/20 text-red-400' :
+                        'bg-blue-500/20 text-blue-400'
+                      }`}>
+                        {activity.type === 'investment' ? <ArrowUpRight className="w-5 h-5" /> :
+                         activity.type === 'redemption' ? <ArrowDownRight className="w-5 h-5" /> :
+                         <Users className="w-5 h-5" />}
+                      </div>
+                      <div>
+                        <div className="font-medium text-white">
+                          {activity.type === 'investment' ? 'New Investment' :
+                           activity.type === 'redemption' ? 'Redemption' :
+                           'New Investor Onboarded'}
+                        </div>
+                        <div className="text-sm text-slate-400">{activity.fund}</div>
+                      </div>
+                    </div>
+                    <div className="text-right">
+                      <div className="font-bold text-white">{activity.amount}</div>
+                      <div className="text-sm text-slate-400">{activity.time}</div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </section>
+          </div>
+        )}
+
+        {/* Placeholder for other sections */}
+        {activeSection !== 'overview' && (
+          <div className="bg-slate-800/30 backdrop-blur-xl rounded-2xl p-12 border border-slate-700/50 text-center">
+            <div className="w-16 h-16 bg-blue-500/20 rounded-2xl flex items-center justify-center mx-auto mb-4">
+              <Database className="w-8 h-8 text-blue-400" />
+            </div>
+            <h3 className="text-2xl font-bold text-white mb-2">
+              {activeSection.charAt(0).toUpperCase() + activeSection.slice(1)} Section
+            </h3>
+            <p className="text-slate-400 mb-6">
+              This section is being built with world-class analytics and insights.
+            </p>
+            <button className="bg-blue-600 hover:bg-blue-700 px-6 py-3 rounded-xl font-medium transition-colors">
+              Coming Soon
+            </button>
+          </div>
+        )}
+      </main>
+    </div>
+  );
+};
+
+export default SIPBreweryDashboard;
