@@ -194,11 +194,13 @@ export default function PortfolioOptimizer() {
             'Review current allocation with your financial advisor',
             'Understand risk implications of any changes',
             'Consider your investment goals and time horizon',
-            'Make informed decisions based on your research'
+            'Make informed decisions based on your research',
+            'Consult with a financial advisor before making any investment decisions',
+            'Consider your overall financial situation and risk tolerance before investing'
           ],
           estimatedCost: 0.35,
           expectedBenefit: 'Educational analysis - consult advisor for actual decisions'
-        },
+        }
       });
     } finally {
       setLoading(false);
