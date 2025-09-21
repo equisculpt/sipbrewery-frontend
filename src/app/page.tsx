@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import { motion } from 'framer-motion';
 import PayTMStyleNavigation from '../components/PayTMStyleNavigation';
 import { Plus, DollarSign } from 'lucide-react';
 import SimpleBackendDemo from '../components/SimpleBackendDemo';
